@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DataAsService.DAL.Configuration;
+using DataAsService.DAL.Configuration.Interfaces;
+using DataAsService.DAL.Repositories;
+using DataAsService.DAL.Repositories.Interfaces;
+using DataAsService.Services;
+using DataAsService.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,8 @@ namespace DataAsService
 {
     public class Startup
     {
+        private const string ConnectionStringName = "AgvanceDatabase";
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -28,7 +32,16 @@ namespace DataAsService
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+
+            var applicationContextService= new ApplicationContextService();
+            services.AddSingleton<IApplicationContextService>(applicationContextService);
+
+            applicationContextService.ConnectionString = Configuration.GetConnectionString(ConnectionStringName);
+
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IConnectionFactory, SqlConnectionFactory>();
+            services.AddMvc()
+                .AddXmlSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
