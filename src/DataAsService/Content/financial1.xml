@@ -6,7 +6,7 @@
 		<item name="begbal" type="xs:double"/>
 		<item name="month" type="xs:string" length="15"/>
 		<item name="monthvalue" type="xs:double"/>
-		<item name="plcat" type="xs:double"/>
+		<item name="plcat" type="xs:string" length="50"/>
 	</metadata>
 	<data>
 		<row>
