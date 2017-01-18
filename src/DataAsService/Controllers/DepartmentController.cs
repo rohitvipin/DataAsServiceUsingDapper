@@ -37,24 +37,6 @@ namespace DataAsService.Controllers
             return NoContent();
         }
 
-        public async Task<IActionResult> Test()
-        {
-            try
-            {
-                var task = _departmentRespository?.Get();
-                if (task != null)
-                {
-                    return Ok(await task);
-                }
-            }
-            catch (System.Exception exception)
-            {
-                return BadRequest(exception);
-            }
-            return NoContent();
-        }
-
-
         // GET api/Department/5
         [HttpGet]
         public async Task<IActionResult> Get(int id)
