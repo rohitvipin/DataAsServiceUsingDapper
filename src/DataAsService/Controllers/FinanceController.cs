@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace DataAsService.Controllers
 {
     [Route("api/[controller]")]
@@ -23,7 +22,7 @@ namespace DataAsService.Controllers
             try
             {
                 const string fileName = "financial1.xml";
-                const string folderName = @"Content";
+                const string folderName = "Content";
 
                 var fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment?.ContentRootPath, folderName, fileName));
                 return File(fileBytes, "application/xml", fileName);
