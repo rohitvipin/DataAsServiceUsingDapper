@@ -16,7 +16,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Dapper": "1.50.2",
-    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.0.1"
+    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.0.1",
+    "Swashbuckle": "6.0.0-beta902"
   },
 
   "tools": {
