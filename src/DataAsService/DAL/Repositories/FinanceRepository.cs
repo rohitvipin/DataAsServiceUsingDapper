@@ -28,7 +28,7 @@ namespace DataAsService.DAL.Repositories
 	                                            WHERE MonthNumber < 11
 	                                            )
 
-                                            SELECT unpvtAcctBal.Id AS AccBalId, curbal AS CurrentBalance, begbal AS BeginingBalance, plcat AS PLCategory, unpvtAcctBal.MonthValue AS AcctBalMonthValue, unpvtAcctbudgfc.MonthValue AS AcctbudgfcMonthValue, m.Id AS MonthId, m.[MonthName]
+                                            SELECT unpvtAcctBal.Id AS AccBalId, curbal AS CurrentBalance, begbal AS BeginingBalance, plcat AS PLCategory, unpvtAcctBal.MonthValue AS AcctBalMonthValue, unpvtAcctbudgfc.MonthValue AS AcctbudgfcMonthValue, LTRIM(RTRIM(m.Id)) AS MonthId, m.[MonthName]
                                             FROM (
 	                                            SELECT ab.id, ab.curbal, ab.begbal, ab.month1, ab.month2, ab.month3, ab.month4, ab.month5, ab.month6, ab.month7, ab.month8, ab.month9, ab.month10, ab.month11, ab.month12, ap.plcat
 	                                            FROM AcctBal ab
