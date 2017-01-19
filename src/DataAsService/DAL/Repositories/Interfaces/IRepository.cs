@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataAsService.DAL.Models;
 
 namespace DataAsService.DAL.Repositories.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<Department>> Get();
+        Task<IEnumerable<T>> Get();
 
         Task<T> GetById(int id);
 

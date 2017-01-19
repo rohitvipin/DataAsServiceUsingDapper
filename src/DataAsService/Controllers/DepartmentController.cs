@@ -18,7 +18,6 @@ namespace DataAsService.Controllers
         }
 
         // GET api/Department
-        [Route("Departments")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -38,7 +37,7 @@ namespace DataAsService.Controllers
         }
 
         // GET api/Department/5
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -76,7 +75,7 @@ namespace DataAsService.Controllers
         }
 
         // POST api/Department
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody]Department department)
         {
             try
@@ -95,7 +94,7 @@ namespace DataAsService.Controllers
         }
 
         // DELETE api/Department/5
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

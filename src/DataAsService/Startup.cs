@@ -33,15 +33,17 @@ namespace DataAsService
         {
             // Add framework services.
 
-            var applicationContextService= new ApplicationContextService();
+            var applicationContextService = new ApplicationContextService();
             services.AddSingleton<IApplicationContextService>(applicationContextService);
 
             applicationContextService.ConnectionString = Configuration.GetConnectionString(ConnectionStringName);
 
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IFinanceRepository, FinanceRepository>();
+
             services.AddTransient<IConnectionFactory, SqlConnectionFactory>();
-            services.AddMvc()
-                .AddXmlSerializerFormatters();
+
+            services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddSwaggerGen();
         }
@@ -52,8 +54,10 @@ namespace DataAsService
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
-
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Get}/{id?}");
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
