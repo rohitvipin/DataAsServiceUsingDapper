@@ -14,16 +14,21 @@ namespace DataAsService
 {
     public class Startup
     {
-        private const string ConnectionStringName = "AgvanceDatabase";
+        private const string ConnectionStringSectionName = "AgvanceDatabase";
 
         public Startup(IHostingEnvironment env)
         {
+            if (env == null)
+            {
+                return;
+            }
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = builder?.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -31,17 +36,18 @@ namespace DataAsService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            //Add Singletons
+            services.AddSingleton<IApplicationContextService>(new ApplicationContextService
+            {
+                ConnectionString = Configuration.GetConnectionString(ConnectionStringSectionName)
+            });
 
-            var applicationContextService = new ApplicationContextService();
-            services.AddSingleton<IApplicationContextService>(applicationContextService);
+            //Add factories
+            services.AddTransient<IConnectionFactory, SqlConnectionFactory>();
 
-            applicationContextService.ConnectionString = Configuration.GetConnectionString(ConnectionStringName);
-
+            //Add Repositories
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
             services.AddTransient<IFinanceRepository, FinanceRepository>();
-
-            services.AddTransient<IConnectionFactory, SqlConnectionFactory>();
 
             services.AddMvc().AddXmlSerializerFormatters();
 
@@ -54,10 +60,7 @@ namespace DataAsService
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Get}/{id?}");
-            });
+            app.UseMvc();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
