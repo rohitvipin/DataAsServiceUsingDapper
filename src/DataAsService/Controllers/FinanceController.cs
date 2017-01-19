@@ -47,7 +47,7 @@ namespace DataAsService.Controllers
         {
             try
             {
-                var task = _financeRepository?.GetById(id);
+                var task = _financeRepository?.GetByAcctBalId(id);
                 if (task != null)
                 {
                     var financeCombined = await task;
@@ -56,7 +56,7 @@ namespace DataAsService.Controllers
                         return NotFound($"id {id} not found.");
                     }
 
-                    var serializedXml = XmlSerializeHelper.SerializeToString(new List<FinanceCombined> { financeCombined });
+                    var serializedXml = XmlSerializeHelper.SerializeToString(financeCombined.ToList());
                     var stringBytes = Encoding.ASCII?.GetBytes(serializedXml);
                     return File(stringBytes, "application/xml", "FinanceDetails.xml");
                 }

@@ -64,10 +64,10 @@ namespace DataAsService.DAL.Repositories
             return queryAsync != null ? await queryAsync : null;
         }
 
-        public async Task<FinanceCombined> GetById(string id)
+        public async Task<IEnumerable<FinanceCombined>> GetByAcctBalId(string id)
         {
             var queryAsync = _dbConnection.QueryAsync<FinanceCombined>(SqlQueryGetById, new { AcctBalId = id });
-            return queryAsync != null ? (await queryAsync).SingleOrDefault() : null;
+            return queryAsync != null ? await queryAsync : null;
         }
 
         public Task<FinanceCombined> GetById(int id)
