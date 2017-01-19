@@ -30,7 +30,7 @@ namespace DataAsService.Controllers
                 {
                     var serializedXml = XmlSerializeHelper.SerializeToString((await task).ToList());
                     var stringBytes = Encoding.ASCII?.GetBytes(serializedXml);
-                    return File(stringBytes, "application/xml", "FinanceDetails.xml");
+                    return File(stringBytes, "application/xml", "SalesDetails.xml");
                 }
             }
             catch (System.Exception exception)
