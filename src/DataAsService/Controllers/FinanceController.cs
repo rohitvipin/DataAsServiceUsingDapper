@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAsService.DAL.Models;
 using DataAsService.DAL.Repositories.Interfaces;
 using DataAsService.Helpers;
 using Microsoft.AspNetCore.Mvc;

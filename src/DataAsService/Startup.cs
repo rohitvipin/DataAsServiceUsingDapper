@@ -48,6 +48,7 @@ namespace DataAsService
             //Add Repositories
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
             services.AddTransient<IFinanceRepository, FinanceRepository>();
+            services.AddTransient<ISalesRepository, SalesRepository>();
 
             services.AddMvc().AddXmlSerializerFormatters();
 
