@@ -27,9 +27,7 @@ namespace DataAsService.Controllers
                 var task = _financeRepository?.Get();
                 if (task != null)
                 {
-                    var serializedXml = XmlSerializeHelper.SerializeToString((await task).ToList());
-                    var stringBytes = Encoding.ASCII?.GetBytes(serializedXml);
-                    return File(stringBytes, "application/xml", "FinanceDetails.xml");
+                    return File(Encoding.ASCII?.GetBytes(XmlSerializeHelper.SerializeToString((await task).ToList())), "application/xml", "FinanceDetails.xml");
                 }
             }
             catch (System.Exception exception)
@@ -54,9 +52,7 @@ namespace DataAsService.Controllers
                         return NotFound($"id {id} not found.");
                     }
 
-                    var serializedXml = XmlSerializeHelper.SerializeToString(financeCombined.ToList());
-                    var stringBytes = Encoding.ASCII?.GetBytes(serializedXml);
-                    return File(stringBytes, "application/xml", "FinanceDetails.xml");
+                    return File(Encoding.ASCII?.GetBytes(XmlSerializeHelper.SerializeToString(financeCombined.ToList())), "application/xml", "FinanceDetails.xml");
                 }
             }
             catch (System.Exception exception)

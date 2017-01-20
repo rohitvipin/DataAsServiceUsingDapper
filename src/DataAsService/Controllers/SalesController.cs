@@ -28,9 +28,7 @@ namespace DataAsService.Controllers
                 var task = _salesRepository?.Get();
                 if (task != null)
                 {
-                    var serializedXml = XmlSerializeHelper.SerializeToString((await task).ToList());
-                    var stringBytes = Encoding.ASCII?.GetBytes(serializedXml);
-                    return File(stringBytes, "application/xml", "SalesDetails.xml");
+                    return File(Encoding.ASCII?.GetBytes(XmlSerializeHelper.SerializeToString((await task).ToList())), "application/xml", "SalesDetails.xml");
                 }
             }
             catch (System.Exception exception)
