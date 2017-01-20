@@ -15,10 +15,17 @@ using Swashbuckle.Swagger.Model;
 
 namespace DataAsService
 {
+    /// <summary>
+    /// The Startup
+    /// </summary>
     public class Startup
     {
         private const string ConnectionStringSectionName = "AgvanceDatabase";
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             if (env == null)
@@ -34,9 +41,15 @@ namespace DataAsService
             Configuration = builder?.Build();
         }
 
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             //Add Singletons
@@ -75,7 +88,12 @@ namespace DataAsService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

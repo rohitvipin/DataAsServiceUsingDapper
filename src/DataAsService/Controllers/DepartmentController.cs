@@ -7,17 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAsService.Controllers
 {
+    /// <summary>
+    /// The department controller
+    /// </summary>
     [Route("api/[controller]")]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentRepository _departmentRespository;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="departmentRespository"></param>
         public DepartmentController(IDepartmentRepository departmentRespository)
         {
             _departmentRespository = departmentRespository;
         }
 
         // GET api/Department
+        /// <summary>
+        /// Gets all the Departments
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -85,6 +96,11 @@ namespace DataAsService.Controllers
         }
 
         // POST api/Department
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="department"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody]Department department)
         {
@@ -104,6 +120,11 @@ namespace DataAsService.Controllers
         }
 
         // DELETE api/Department/5
+        /// <summary>
+        /// Deletes a Department
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

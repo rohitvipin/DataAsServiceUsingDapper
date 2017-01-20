@@ -8,17 +8,28 @@ using Microsoft.AspNetCore.Mvc;
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 namespace DataAsService.Controllers
 {
+    /// <summary>
+    /// Finance Controller
+    /// </summary>
     [Route("api/[controller]")]
     public class FinanceController : Controller
     {
         private readonly IFinanceRepository _financeRepository;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="financeRepository"></param>
         public FinanceController(IFinanceRepository financeRepository)
         {
             _financeRepository = financeRepository;
         }
 
         // GET: api/Finance
+        /// <summary>
+        /// Get all the finance
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -38,6 +49,11 @@ namespace DataAsService.Controllers
         }
 
         // GET api/Finance/5
+        /// <summary>
+        /// Get finance record by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {

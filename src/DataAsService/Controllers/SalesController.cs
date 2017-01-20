@@ -9,17 +9,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAsService.Controllers
 {
+    /// <summary>
+    /// SalesController
+    /// </summary>
     [Route("api/[controller]")]
     public class SalesController : Controller
     {
         private readonly ISalesRepository _salesRepository;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="salesRepository"></param>
         public SalesController(ISalesRepository salesRepository)
         {
             _salesRepository = salesRepository;
         }
 
         // GET: api/values
+        /// <summary>
+        /// Get all sales records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
