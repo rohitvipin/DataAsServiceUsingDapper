@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace DataAsService.Helpers
 {
@@ -12,7 +13,7 @@ namespace DataAsService.Helpers
         private const string DocumentFooter = "</dataset>";
         private const string DefaultPropertyTypeName = "string";
 
-        private static string CreateMetaData(object item, PropertyInfo[] propertyInfos)
+        private static string CreateMetaData(PropertyInfo[] propertyInfos)
         {
             var metadataSb = new StringBuilder("<metadata>");
 
@@ -108,10 +109,19 @@ namespace DataAsService.Helpers
 
                     foreach (var prop in propertyInfos)
                     {
-                        if (prop != null)
+                        if (prop == null)
                         {
-                            metadataSb.Append($"<value>{prop.GetValue(item)}</value>");
+                            continue;
                         }
+
+                        var value = prop.GetValue(item);
+
+                        if (value is string)
+                        {
+                            value = ReplaceInValidXmlChars((string)value);
+                        }
+
+                        metadataSb.Append($"<value>{value}</value>");
                     }
 
                     metadataSb.Append("</row>");
@@ -121,6 +131,13 @@ namespace DataAsService.Helpers
             metadataSb.Append("</data>");
             return metadataSb.ToString();
         }
+
+        /// <summary>
+        /// The following characters are replaced : "&lt;" to "&amp;lt;", "&gt;" to "&amp;gt;", "\"" to "&amp;quot;", "\'" to "&amp;apos;", "&amp;" to "&amp;amp;"
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static string ReplaceInValidXmlChars(string input) => input?.Replace("<", "&lt;")?.Replace(">", "&gt;")?.Replace("\"", "&quot;")?.Replace("\'", "&apos;")?.Replace("&", "&amp;");
 
         #endregion
 
@@ -140,7 +157,7 @@ namespace DataAsService.Helpers
             }
 
             return new StringBuilder(DocumentHeader)
-                .Append(CreateMetaData(firstItem, propertyInfos))
+                .Append(CreateMetaData(propertyInfos))
                 ?.Append(CreateData(collection, propertyInfos))
                 ?.Append(DocumentFooter)
                 ?.ToString();

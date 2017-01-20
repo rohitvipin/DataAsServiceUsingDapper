@@ -13,7 +13,7 @@ namespace DataAsService.DAL.Repositories
     {
         private const string SqlQueryGetAll = @"SELECT departmt.category AS Category, invli.growshare AS GrowShare, invli.deptid AS DepartmentId, invli.prodid AS ProductId, product.prodname AS ProductName
                                                     , invli.costshare AS CostShare, ltrim(grower.growname1 + ' ' + grower.growname2) AS 'Grower', location.NAME AS LocationName, round(invli.growshare - invli.costshare, 2) AS 'Profit'
-                                                    , ISNULL(salesmen.firstname + ' ' + salesmen.lastname, '') as 'SalesPerson'
+                                                    , ISNULL(salesmen.firstname + ' ' + salesmen.lastname, 'N/A') as 'SalesPerson'
                                                 FROM invoice
                                                 INNER JOIN invli ON invoice.invnum = invli.invnum AND invoice.invdate = invli.invoicedate AND invli.location = invoice.location
                                                 INNER JOIN grower ON grower.growid = invli.custid
