@@ -1,4 +1,5 @@
-﻿using DataAsService.DAL.Configuration;
+﻿using System.IO;
+using DataAsService.DAL.Configuration;
 using DataAsService.DAL.Configuration.Interfaces;
 using DataAsService.DAL.Repositories;
 using DataAsService.DAL.Repositories.Interfaces;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.Swagger.Model;
 
 namespace DataAsService
 {
@@ -53,6 +56,23 @@ namespace DataAsService
             services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddSwaggerGen();
+
+            // Add the detail information for the API.
+            services.ConfigureSwaggerGen(options =>
+            {
+                options?.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "Cognos Data Service",
+                    Description = "Web API that provides the data in a format that Cognos would accept",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "MyName", Email = "a@a.com", Url = "http://url.com" },
+                    License = new License { Name = "Use under LICX", Url = "http://url.com" }
+                });
+                
+                //Set the comments path for the swagger json and ui.
+                options?.IncludeXmlComments(Path.Combine(PlatformServices.Default?.Application?.ApplicationBasePath, "DataAsService.xml"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -37,6 +37,16 @@ namespace DataAsService.Controllers
         }
 
         // GET api/Department/5
+        /// <summary>
+        /// Gets a department by the Id
+        /// </summary>
+        /// <remarks>
+        /// Pass the integer Id of the department
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns>Gets the Department object</returns>
+        /// <response code="200">Returns the Department object</response>
+        [ProducesResponseType(typeof(Department), 200)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
